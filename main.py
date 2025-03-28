@@ -25,7 +25,7 @@ async def main() -> None:
 
     # Erstelle die Audio-Datei
     response = await openai.audio.speech.create(
-        model="tts-1",
+        model="gpt-4o-mini-tts",
         voice="onyx",
         input=input,
         response_format="mp3",
