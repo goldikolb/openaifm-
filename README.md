@@ -17,8 +17,8 @@ Dieses Projekt enthält zwei Python-Skripte, die die OpenAI API für Text-to-Spe
 
 1. Klonen Sie das Repository:
 ```bash
-git clone https://github.com/goldikolb/openaifm.git
-cd openaifm
+git clone https://github.com/goldikolb/openaifm-.git
+cd openaifm-
 ```
 
 2. Erstellen Sie eine virtuelle Umgebung und aktivieren Sie diese:
