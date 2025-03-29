@@ -11,9 +11,9 @@ load_dotenv()
 
 openai = AsyncOpenAI()
 
-input = """Sein oder Nichtsein, das ist die Frage."""
+input = """Hier gebe den Text ein, den du als Audio erzeugen willst"""
 
-instructions = """Effect:\nEin weiser Denker – ruhig, nachdenklich, mit einem Blick fürs Große Ganze. Wie jemand, der lieber zuhört als redet, aber wenn er spricht, dann mit Bedeutung.\n\nTone:\nSanft, klar und introspektiv – nicht belehrend, sondern einladend zum Mitdenken. Jemand, der nicht überzeugen muss, weil die Tiefe der Worte für sich spricht.\n\nDelivery:\nLangsam, mit Bedacht. Kurze Pausen zwischen den Gedanken – als würde der Sprecher selbst erst beim Sprechen verstehen, was da wirklich gesagt wird.\nRhythmus ähnlich wie bei einem leisen inneren Dialog – fast meditativ.\n\nEmotion:\nTiefe Ruhe. Ein Hauch von Melancholie – aber auch Hoffnung.\nDiese Stimme kennt die Widersprüche des Lebens und bleibt doch zugewandt.\nSie stellt Fragen, keine Urteile.\nVertraut dem Zuhörer.\n\nPunctuation & Rhythmus:\nKurze Sätze. Punktuell mit bewussten Pausen.\nManche Gedanken hängen – wie in der Luft – nach.\nEllipsen und Gedankenstriche dürfen Raum lassen für Nachhall und Interpretation.\nNicht monoton – aber ohne Dramatik. F"""
+instructions = """Beschreibe hier den Klang der Stimme"""
 
 async def main() -> None:
     # Erstelle einen Zeitstempel für den Dateinamen
@@ -23,17 +23,17 @@ async def main() -> None:
     # Stelle sicher, dass der output-Ordner existiert
     os.makedirs("output", exist_ok=True)
 
-    # Erstelle die Audio-Datei
-    response = await openai.audio.speech.create(
+    # Erstelle die Audio-Datei mit Streaming
+    async with openai.audio.speech.with_streaming_response.create(
         model="gpt-4o-mini-tts",
-        voice="onyx",
+        voice="sage", #alloy ash ballad coral echo fable onyx nova sage shimmer
         input=input,
+        instructions=instructions,
         response_format="mp3",
-    )
-
-    # Speichere die Audio-Datei
-    response.stream_to_file(output_file)
-    print(f"Audio wurde gespeichert in: {output_file}")
+    ) as response:
+        # Speichere die Audio-Datei
+        await response.stream_to_file(output_file)
+        print(f"Audio wurde gespeichert in: {output_file}")
 
 if __name__ == "__main__":
     asyncio.run(main())
